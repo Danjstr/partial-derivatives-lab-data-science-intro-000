@@ -16,16 +16,16 @@ Write out Python functions that return the values $f(x, y)$ for $f(x, 1)$, $f(x,
 
 ```python
 def three_x_y_at_one(x):
-    pass
+    return 3*x
 
 def three_x_y_at_three(x):
-    pass
+    return 3*3*x
 
 def three_x_y_at_six(x):
-    pass
+    return 3*6*x
 
 def three_x_y_at_nine(x):
-    pass
+    return 3*9*x
 ```
 
 
@@ -44,16 +44,16 @@ zero_to_ten = list(range(0, 11))
 zero_to_four = list(range(0, 5))
 
 def y_values_for_at_one(x_values):
-    pass
+    return list(map(lambda x_value: three_x_y_at_one(x_value), x_values))
 
 def y_values_for_at_three(x_values):
-    pass
+    return list(map(lambda x_value: three_x_y_at_three(x_value), x_values))
 
 def y_values_for_at_six(x_values):
-    pass
+    return list(map(lambda x_value: three_x_y_at_six(x_value), x_values))
 
 def y_values_for_at_nine(x_values):
-    pass
+    return list(map(lambda x_value: three_x_y_at_nine(x_value), x_values))
 ```
 
 
@@ -133,25 +133,25 @@ Now let's think of how to take the derivative of our $ \frac{\delta f}{\delta x}
 
 ```python
 def df_dx_when_y_equals_one():
-    pass
+    return 3
 ```
 
 
 ```python
 def df_dx_when_y_equals_three():
-    pass
+    return 9
 ```
 
 
 ```python
 def df_dx_when_y_equals_six():
-    pass
+    return 18
 ```
 
 
 ```python
 def df_dx_when_y_equals_nine():
-    pass
+    return 27
 ```
 
 So notice that there is a pattern here, in taking $ \frac{\delta f}{\delta x}$ for our function $f(x, y) = 3xy$.  Now write a function that calculates $ \frac{\delta f}{\delta x}$ for our function $f(x,y)$ at any provided $x$ and $y$ value.
@@ -159,7 +159,7 @@ So notice that there is a pattern here, in taking $ \frac{\delta f}{\delta x}$ f
 
 ```python
 def df_dx_3xy(x_value, y_value):
-    pass
+    return 3*y_value
 ```
 
 
@@ -202,7 +202,14 @@ Let's get started by writing a function `multivariable_output_at` that takes in 
 
 ```python
 def multivariable_output_at(list_of_terms, x_value, y_value):
-    pass
+    output = []
+    for term in list_of_terms:
+        constant = term[0]
+        x_exponent = term[1]
+        y_exponent = term[2]
+        term_output = constant*x_value**x_exponent*y_value**y_exponent
+        output.append(term_output)
+    return sum(output)
 ```
 
 
@@ -237,7 +244,9 @@ So now we want to write a Python function that calculates $\frac{\delta f}{\delt
 
 ```python
 def term_df_dx(term):
-    pass
+    constant = term[0]*term[1]
+    exponent = term[1] - 1
+    return (constant, exponent,term[2])
 ```
 
 
@@ -261,7 +270,8 @@ Now write a function that finds the derivative of all terms, $\frac{\delta f}{\d
 
 ```python
 def df_dx(list_of_terms):
-    pass
+    derivative_terms = list(map(lambda function_term: term_df_dx(function_term),list_of_terms))
+    return list(filter(lambda derivative_term: derivative_term[0] > 0, derivative_terms))
 ```
 
 
@@ -274,7 +284,9 @@ Now that we have done this for $\frac{\delta f}{\delta x}$, lets work on taking 
 
 ```python
 def term_df_dy(term):
-    pass
+    constant = term[0]*term[2]
+    exponent = term[2] - 1
+    return (constant, term[1], exponent)
 ```
 
 
@@ -328,7 +340,8 @@ four_x_squared_y_plus_three_x_plus_y
 
 ```python
 def df_dy(list_of_terms):
-    pass
+    derivative_terms = list(map(lambda function_term: term_df_dy(function_term),list_of_terms))
+    return list(filter(lambda derivative_term: derivative_term[0] > 0, derivative_terms))
 ```
 
 
